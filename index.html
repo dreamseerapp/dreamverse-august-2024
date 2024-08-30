@@ -1,0 +1,162 @@
+<h1 style="text-align:center;">Dreamverse State</h1>
+<h2 style="text-align:center;">August 30, 2024</h2>
+<div style="padding: 80px;"><html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #2b252f;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "red", "font": {"color": "white"}, "id": "vulnerability", "label": "vulnerability", "shape": "dot", "title": "vulnerability"}, {"color": "red", "font": {"color": "white"}, "id": "anxiety", "label": "anxiety", "shape": "dot", "title": "anxiety"}, {"color": "purple", "font": {"color": "white"}, "id": "relationships", "label": "relationships", "shape": "dot", "title": "relationships"}, {"color": "red", "font": {"color": "white"}, "id": "family", "label": "family", "shape": "dot", "title": "family"}, {"color": "red", "font": {"color": "white"}, "id": "responsibility", "label": "responsibility", "shape": "dot", "title": "responsibility"}, {"color": "purple", "font": {"color": "white"}, "id": "support", "label": "support", "shape": "dot", "title": "support"}, {"color": "purple", "font": {"color": "white"}, "id": "conflict", "label": "conflict", "shape": "dot", "title": "conflict"}, {"color": "purple", "font": {"color": "white"}, "id": "door", "label": "door", "shape": "dot", "title": "door"}, {"color": "purple", "font": {"color": "white"}, "id": "new beginnings", "label": "new beginnings", "shape": "dot", "title": "new beginnings"}, {"color": "red", "font": {"color": "white"}, "id": "control", "label": "control", "shape": "dot", "title": "control"}, {"color": "purple", "font": {"color": "white"}, "id": "night", "label": "night", "shape": "dot", "title": "night"}, {"color": "purple", "font": {"color": "white"}, "id": "acceptance", "label": "acceptance", "shape": "dot", "title": "acceptance"}, {"color": "red", "font": {"color": "white"}, "id": "water", "label": "water", "shape": "dot", "title": "water"}, {"color": "red", "font": {"color": "white"}, "id": "protection", "label": "protection", "shape": "dot", "title": "protection"}, {"color": "purple", "font": {"color": "white"}, "id": "falling", "label": "falling", "shape": "dot", "title": "falling"}, {"color": "purple", "font": {"color": "white"}, "id": "identity", "label": "identity", "shape": "dot", "title": "identity"}, {"color": "purple", "font": {"color": "white"}, "id": "security", "label": "security", "shape": "dot", "title": "security"}, {"color": "purple", "font": {"color": "white"}, "id": "boundaries", "label": "boundaries", "shape": "dot", "title": "boundaries"}, {"color": "purple", "font": {"color": "white"}, "id": "change", "label": "change", "shape": "dot", "title": "change"}, {"color": "purple", "font": {"color": "white"}, "id": "loss control", "label": "loss control", "shape": "dot", "title": "loss control"}, {"color": "red", "font": {"color": "white"}, "id": "fear", "label": "fear", "shape": "dot", "title": "fear"}, {"color": "purple", "font": {"color": "white"}, "id": "friendship", "label": "friendship", "shape": "dot", "title": "friendship"}, {"color": "purple", "font": {"color": "white"}, "id": "resilience", "label": "resilience", "shape": "dot", "title": "resilience"}, {"color": "purple", "font": {"color": "white"}, "id": "crying", "label": "crying", "shape": "dot", "title": "crying"}, {"color": "red", "font": {"color": "white"}, "id": "house", "label": "house", "shape": "dot", "title": "house"}, {"color": "purple", "font": {"color": "white"}, "id": "selfimage", "label": "selfimage", "shape": "dot", "title": "selfimage"}, {"color": "red", "font": {"color": "white"}, "id": "transformation", "label": "transformation", "shape": "dot", "title": "transformation"}, {"color": "purple", "font": {"color": "white"}, "id": "personal boundaries", "label": "personal boundaries", "shape": "dot", "title": "personal boundaries"}, {"color": "purple", "font": {"color": "white"}, "id": "ocean", "label": "ocean", "shape": "dot", "title": "ocean"}, {"color": "purple", "font": {"color": "white"}, "id": "discomfort", "label": "discomfort", "shape": "dot", "title": "discomfort"}, {"color": "purple", "font": {"color": "white"}, "id": "loss", "label": "loss", "shape": "dot", "title": "loss"}, {"color": "purple", "font": {"color": "white"}, "id": "car", "label": "car", "shape": "dot", "title": "car"}, {"color": "purple", "font": {"color": "white"}, "id": "instability", "label": "instability", "shape": "dot", "title": "instability"}, {"color": "purple", "font": {"color": "white"}, "id": "safety", "label": "safety", "shape": "dot", "title": "safety"}, {"color": "purple", "font": {"color": "white"}, "id": "wedding", "label": "wedding", "shape": "dot", "title": "wedding"}, {"color": "purple", "font": {"color": "white"}, "id": "teeth", "label": "teeth", "shape": "dot", "title": "teeth"}, {"color": "purple", "font": {"color": "white"}, "id": "intimacy", "label": "intimacy", "shape": "dot", "title": "intimacy"}, {"color": "purple", "font": {"color": "white"}, "id": "overwhelm", "label": "overwhelm", "shape": "dot", "title": "overwhelm"}, {"color": "purple", "font": {"color": "white"}, "id": "pressure", "label": "pressure", "shape": "dot", "title": "pressure"}, {"color": "purple", "font": {"color": "white"}, "id": "uncertainty", "label": "uncertainty", "shape": "dot", "title": "uncertainty"}, {"color": "purple", "font": {"color": "white"}, "id": "obstacles", "label": "obstacles", "shape": "dot", "title": "obstacles"}, {"color": "purple", "font": {"color": "white"}, "id": "helplessness", "label": "helplessness", "shape": "dot", "title": "helplessness"}, {"color": "purple", "font": {"color": "white"}, "id": "baby", "label": "baby", "shape": "dot", "title": "baby"}, {"color": "purple", "font": {"color": "white"}, "id": "unpreparedness", "label": "unpreparedness", "shape": "dot", "title": "unpreparedness"}, {"color": "purple", "font": {"color": "white"}, "id": "unresolved feelings", "label": "unresolved feelings", "shape": "dot", "title": "unresolved feelings"}, {"color": "purple", "font": {"color": "white"}, "id": "past relationships", "label": "past relationships", "shape": "dot", "title": "past relationships"}, {"color": "purple", "font": {"color": "white"}, "id": "comfort", "label": "comfort", "shape": "dot", "title": "comfort"}, {"color": "purple", "font": {"color": "white"}, "id": "nostalgia", "label": "nostalgia", "shape": "dot", "title": "nostalgia"}, {"color": "purple", "font": {"color": "white"}, "id": "journey", "label": "journey", "shape": "dot", "title": "journey"}, {"color": "purple", "font": {"color": "white"}, "id": "transition", "label": "transition", "shape": "dot", "title": "transition"}, {"color": "purple", "font": {"color": "white"}, "id": "personal growth", "label": "personal growth", "shape": "dot", "title": "personal growth"}, {"color": "purple", "font": {"color": "white"}, "id": "school", "label": "school", "shape": "dot", "title": "school"}, {"color": "purple", "font": {"color": "white"}, "id": "selfdiscovery", "label": "selfdiscovery", "shape": "dot", "title": "selfdiscovery"}, {"color": "purple", "font": {"color": "white"}, "id": "guilt", "label": "guilt", "shape": "dot", "title": "guilt"}, {"color": "purple", "font": {"color": "white"}, "id": "emotions", "label": "emotions", "shape": "dot", "title": "emotions"}, {"color": "purple", "font": {"color": "white"}, "id": "war", "label": "war", "shape": "dot", "title": "war"}, {"color": "purple", "font": {"color": "white"}, "id": "snake", "label": "snake", "shape": "dot", "title": "snake"}, {"color": "purple", "font": {"color": "white"}, "id": "insecurity", "label": "insecurity", "shape": "dot", "title": "insecurity"}, {"color": "purple", "font": {"color": "white"}, "id": "innocence", "label": "innocence", "shape": "dot", "title": "innocence"}, {"color": "purple", "font": {"color": "white"}, "id": "empathy", "label": "empathy", "shape": "dot", "title": "empathy"}, {"color": "purple", "font": {"color": "white"}, "id": "child", "label": "child", "shape": "dot", "title": "child"}, {"color": "purple", "font": {"color": "white"}, "id": "city", "label": "city", "shape": "dot", "title": "city"}, {"color": "purple", "font": {"color": "white"}, "id": "flying", "label": "flying", "shape": "dot", "title": "flying"}, {"color": "purple", "font": {"color": "white"}, "id": "guidance", "label": "guidance", "shape": "dot", "title": "guidance"}, {"color": "purple", "font": {"color": "white"}, "id": "window", "label": "window", "shape": "dot", "title": "window"}, {"color": "purple", "font": {"color": "white"}, "id": "dolphin", "label": "dolphin", "shape": "dot", "title": "dolphin"}, {"color": "purple", "font": {"color": "white"}, "id": "key", "label": "key", "shape": "dot", "title": "key"}, {"color": "purple", "font": {"color": "white"}, "id": "authority", "label": "authority", "shape": "dot", "title": "authority"}, {"color": "purple", "font": {"color": "white"}, "id": "relationship", "label": "relationship", "shape": "dot", "title": "relationship"}, {"color": "purple", "font": {"color": "white"}, "id": "decisionmaking", "label": "decisionmaking", "shape": "dot", "title": "decisionmaking"}, {"color": "purple", "font": {"color": "white"}, "id": "childhood", "label": "childhood", "shape": "dot", "title": "childhood"}, {"color": "purple", "font": {"color": "white"}, "id": "grief", "label": "grief", "shape": "dot", "title": "grief"}, {"color": "purple", "font": {"color": "white"}, "id": "strength", "label": "strength", "shape": "dot", "title": "strength"}, {"color": "purple", "font": {"color": "white"}, "id": "fighting", "label": "fighting", "shape": "dot", "title": "fighting"}, {"color": "purple", "font": {"color": "white"}, "id": "trust", "label": "trust", "shape": "dot", "title": "trust"}, {"color": "purple", "font": {"color": "white"}, "id": "connection", "label": "connection", "shape": "dot", "title": "connection"}, {"color": "purple", "font": {"color": "white"}, "id": "money", "label": "money", "shape": "dot", "title": "money"}, {"color": "purple", "font": {"color": "white"}, "id": "nurturing", "label": "nurturing", "shape": "dot", "title": "nurturing"}, {"color": "purple", "font": {"color": "white"}, "id": "betrayal", "label": "betrayal", "shape": "dot", "title": "betrayal"}, {"color": "purple", "font": {"color": "white"}, "id": "death", "label": "death", "shape": "dot", "title": "death"}, {"color": "purple", "font": {"color": "white"}, "id": "pregnancy", "label": "pregnancy", "shape": "dot", "title": "pregnancy"}, {"color": "purple", "font": {"color": "white"}, "id": "family dynamics", "label": "family dynamics", "shape": "dot", "title": "family dynamics"}, {"color": "purple", "font": {"color": "white"}, "id": "desire", "label": "desire", "shape": "dot", "title": "desire"}, {"color": "purple", "font": {"color": "white"}, "id": "gift", "label": "gift", "shape": "dot", "title": "gift"}, {"color": "purple", "font": {"color": "white"}, "id": "garden", "label": "garden", "shape": "dot", "title": "garden"}]);
+                  edges = new vis.DataSet([{"from": "vulnerability", "to": "anxiety", "value": 25}, {"from": "vulnerability", "to": "relationships", "value": 4}, {"from": "vulnerability", "to": "family", "value": 8}, {"from": "vulnerability", "to": "responsibility", "value": 6}, {"from": "vulnerability", "to": "support", "value": 6}, {"from": "vulnerability", "to": "conflict", "value": 4}, {"from": "vulnerability", "to": "door", "value": 8}, {"from": "vulnerability", "to": "new beginnings", "value": 4}, {"from": "vulnerability", "to": "control", "value": 12}, {"from": "vulnerability", "to": "night", "value": 4}, {"from": "vulnerability", "to": "acceptance", "value": 4}, {"from": "vulnerability", "to": "water", "value": 7}, {"from": "vulnerability", "to": "protection", "value": 10}, {"from": "vulnerability", "to": "falling", "value": 6}, {"from": "vulnerability", "to": "identity", "value": 8}, {"from": "vulnerability", "to": "security", "value": 10}, {"from": "vulnerability", "to": "boundaries", "value": 7}, {"from": "vulnerability", "to": "change", "value": 7}, {"from": "vulnerability", "to": "loss control", "value": 6}, {"from": "vulnerability", "to": "fear", "value": 13}, {"from": "vulnerability", "to": "friendship", "value": 5}, {"from": "vulnerability", "to": "resilience", "value": 5}, {"from": "vulnerability", "to": "crying", "value": 4}, {"from": "vulnerability", "to": "house", "value": 13}, {"from": "vulnerability", "to": "selfimage", "value": 4}, {"from": "vulnerability", "to": "transformation", "value": 4}, {"from": "vulnerability", "to": "personal boundaries", "value": 6}, {"from": "vulnerability", "to": "ocean", "value": 5}, {"from": "vulnerability", "to": "discomfort", "value": 4}, {"from": "anxiety", "to": "fear", "value": 21}, {"from": "anxiety", "to": "loss", "value": 13}, {"from": "anxiety", "to": "house", "value": 12}, {"from": "anxiety", "to": "change", "value": 13}, {"from": "anxiety", "to": "identity", "value": 5}, {"from": "anxiety", "to": "car", "value": 5}, {"from": "anxiety", "to": "conflict", "value": 5}, {"from": "anxiety", "to": "protection", "value": 17}, {"from": "anxiety", "to": "instability", "value": 4}, {"from": "anxiety", "to": "falling", "value": 4}, {"from": "anxiety", "to": "family", "value": 13}, {"from": "anxiety", "to": "control", "value": 18}, {"from": "anxiety", "to": "safety", "value": 4}, {"from": "anxiety", "to": "wedding", "value": 5}, {"from": "anxiety", "to": "teeth", "value": 4}, {"from": "anxiety", "to": "transformation", "value": 8}, {"from": "anxiety", "to": "intimacy", "value": 4}, {"from": "anxiety", "to": "overwhelm", "value": 5}, {"from": "anxiety", "to": "responsibility", "value": 11}, {"from": "anxiety", "to": "security", "value": 7}, {"from": "anxiety", "to": "ocean", "value": 5}, {"from": "anxiety", "to": "pressure", "value": 4}, {"from": "anxiety", "to": "support", "value": 5}, {"from": "anxiety", "to": "uncertainty", "value": 7}, {"from": "anxiety", "to": "obstacles", "value": 4}, {"from": "anxiety", "to": "helplessness", "value": 5}, {"from": "anxiety", "to": "water", "value": 6}, {"from": "anxiety", "to": "baby", "value": 5}, {"from": "anxiety", "to": "unpreparedness", "value": 4}, {"from": "anxiety", "to": "new beginnings", "value": 5}, {"from": "relationships", "to": "fear", "value": 4}, {"from": "relationships", "to": "house", "value": 4}, {"from": "relationships", "to": "identity", "value": 5}, {"from": "relationships", "to": "connection", "value": 4}, {"from": "family", "to": "transition", "value": 6}, {"from": "family", "to": "fear", "value": 6}, {"from": "family", "to": "protection", "value": 12}, {"from": "family", "to": "house", "value": 14}, {"from": "family", "to": "water", "value": 5}, {"from": "family", "to": "control", "value": 5}, {"from": "family", "to": "loss", "value": 6}, {"from": "family", "to": "responsibility", "value": 11}, {"from": "family", "to": "support", "value": 12}, {"from": "family", "to": "nostalgia", "value": 5}, {"from": "family", "to": "ocean", "value": 4}, {"from": "family", "to": "grief", "value": 4}, {"from": "family", "to": "connection", "value": 6}, {"from": "family", "to": "change", "value": 7}, {"from": "responsibility", "to": "guilt", "value": 4}, {"from": "responsibility", "to": "fear", "value": 5}, {"from": "responsibility", "to": "protection", "value": 8}, {"from": "responsibility", "to": "support", "value": 5}, {"from": "responsibility", "to": "car", "value": 4}, {"from": "responsibility", "to": "money", "value": 4}, {"from": "responsibility", "to": "nurturing", "value": 4}, {"from": "responsibility", "to": "new beginnings", "value": 7}, {"from": "responsibility", "to": "baby", "value": 7}, {"from": "support", "to": "transition", "value": 4}, {"from": "support", "to": "house", "value": 4}, {"from": "support", "to": "night", "value": 5}, {"from": "support", "to": "water", "value": 5}, {"from": "support", "to": "money", "value": 4}, {"from": "conflict", "to": "fear", "value": 8}, {"from": "conflict", "to": "water", "value": 4}, {"from": "conflict", "to": "identity", "value": 6}, {"from": "conflict", "to": "fighting", "value": 4}, {"from": "conflict", "to": "authority", "value": 5}, {"from": "conflict", "to": "school", "value": 5}, {"from": "conflict", "to": "trust", "value": 4}, {"from": "new beginnings", "to": "house", "value": 4}, {"from": "new beginnings", "to": "night", "value": 4}, {"from": "new beginnings", "to": "transformation", "value": 5}, {"from": "new beginnings", "to": "pregnancy", "value": 6}, {"from": "new beginnings", "to": "baby", "value": 11}, {"from": "new beginnings", "to": "change", "value": 4}, {"from": "control", "to": "fear", "value": 8}, {"from": "control", "to": "protection", "value": 4}, {"from": "control", "to": "house", "value": 8}, {"from": "control", "to": "security", "value": 4}, {"from": "control", "to": "car", "value": 8}, {"from": "control", "to": "authority", "value": 4}, {"from": "control", "to": "insecurity", "value": 4}, {"from": "control", "to": "loss", "value": 4}, {"from": "control", "to": "boundaries", "value": 4}, {"from": "control", "to": "uncertainty", "value": 6}, {"from": "night", "to": "water", "value": 5}, {"from": "night", "to": "nostalgia", "value": 4}, {"from": "night", "to": "transformation", "value": 4}, {"from": "water", "to": "transition", "value": 6}, {"from": "water", "to": "house", "value": 5}, {"from": "water", "to": "transformation", "value": 6}, {"from": "water", "to": "ocean", "value": 9}, {"from": "water", "to": "dolphin", "value": 5}, {"from": "water", "to": "key", "value": 4}, {"from": "water", "to": "child", "value": 6}, {"from": "water", "to": "water", "value": 6}, {"from": "water", "to": "nostalgia", "value": 5}, {"from": "water", "to": "emotions", "value": 5}, {"from": "water", "to": "falling", "value": 4}, {"from": "water", "to": "helplessness", "value": 4}, {"from": "protection", "to": "transition", "value": 5}, {"from": "protection", "to": "fear", "value": 10}, {"from": "protection", "to": "house", "value": 6}, {"from": "protection", "to": "safety", "value": 5}, {"from": "protection", "to": "loss", "value": 7}, {"from": "protection", "to": "helplessness", "value": 7}, {"from": "protection", "to": "innocence", "value": 4}, {"from": "protection", "to": "empathy", "value": 4}, {"from": "protection", "to": "child", "value": 5}, {"from": "identity", "to": "house", "value": 4}, {"from": "identity", "to": "loss", "value": 4}, {"from": "identity", "to": "transformation", "value": 6}, {"from": "identity", "to": "change", "value": 5}, {"from": "security", "to": "house", "value": 7}, {"from": "security", "to": "relationship", "value": 4}, {"from": "security", "to": "window", "value": 4}, {"from": "change", "to": "transition", "value": 5}, {"from": "change", "to": "house", "value": 9}, {"from": "change", "to": "loss", "value": 4}, {"from": "change", "to": "transformation", "value": 8}, {"from": "change", "to": "nostalgia", "value": 6}, {"from": "change", "to": "teeth", "value": 4}, {"from": "change", "to": "school", "value": 4}, {"from": "loss control", "to": "fear", "value": 5}, {"from": "fear", "to": "transition", "value": 6}, {"from": "fear", "to": "house", "value": 7}, {"from": "fear", "to": "loss", "value": 6}, {"from": "fear", "to": "war", "value": 5}, {"from": "fear", "to": "transformation", "value": 4}, {"from": "fear", "to": "snake", "value": 4}, {"from": "fear", "to": "car", "value": 4}, {"from": "fear", "to": "helplessness", "value": 4}, {"from": "fear", "to": "obstacles", "value": 4}, {"from": "fear", "to": "insecurity", "value": 5}, {"from": "friendship", "to": "house", "value": 5}, {"from": "friendship", "to": "nostalgia", "value": 4}, {"from": "resilience", "to": "transformation", "value": 6}, {"from": "crying", "to": "loss", "value": 4}, {"from": "house", "to": "flying", "value": 4}, {"from": "house", "to": "nostalgia", "value": 6}, {"from": "house", "to": "transformation", "value": 6}, {"from": "house", "to": "guidance", "value": 6}, {"from": "house", "to": "window", "value": 4}, {"from": "transformation", "to": "personal growth", "value": 6}, {"from": "transformation", "to": "city", "value": 4}, {"from": "transformation", "to": "guidance", "value": 4}, {"from": "transformation", "to": "strength", "value": 4}, {"from": "loss", "to": "grief", "value": 8}, {"from": "loss", "to": "helplessness", "value": 4}, {"from": "car", "to": "family dynamics", "value": 4}, {"from": "teeth", "to": "death", "value": 4}, {"from": "intimacy", "to": "relationship", "value": 4}, {"from": "intimacy", "to": "connection", "value": 5}, {"from": "uncertainty", "to": "transition", "value": 4}, {"from": "uncertainty", "to": "decisionmaking", "value": 4}, {"from": "unresolved feelings", "to": "past relationships", "value": 4}, {"from": "comfort", "to": "nostalgia", "value": 4}, {"from": "nostalgia", "to": "childhood", "value": 5}, {"from": "nostalgia", "to": "school", "value": 7}, {"from": "journey", "to": "transition", "value": 5}, {"from": "transition", "to": "emotions", "value": 4}, {"from": "personal growth", "to": "school", "value": 4}, {"from": "personal growth", "to": "selfdiscovery", "value": 4}, {"from": "insecurity", "to": "trust", "value": 5}, {"from": "insecurity", "to": "betrayal", "value": 5}, {"from": "trust", "to": "betrayal", "value": 4}, {"from": "connection", "to": "desire", "value": 4}, {"from": "gift", "to": "garden", "value": 4}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html></div><h1 style="text-align:center;"> </h1>
+<h2 style="text-align:center;">Shared Themes</h2>
+<div style="text-align:center;"><img src="wordcloud_themes.png" alt="Word Cloud Themes" style="width:80%;margin-top:20px;"></div>
+<h1 style="text-align:center;"> </h1>
+<h2 style="text-align:center;">Shared Symbols</h2>
+<div style="text-align:center;"><img src="wordcloud_symbols.png" alt="Word Cloud Symbols" style="width:80%;margin-top:20px;"></div>
